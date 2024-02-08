@@ -3,7 +3,7 @@ import { useId } from 'react'
 import { CartIcon, ClearCartIcon } from './Icons.jsx'
 import { useCart } from '../hooks/useCart.js'
 
-function CartItem ({ thumbnail, price, title, quantity, addToCart }) {
+function CartItem ({ thumbnail, price, title, quantity, addToCart, decrementProduct }) {
   return (
     <li>
       <img
@@ -11,14 +11,16 @@ function CartItem ({ thumbnail, price, title, quantity, addToCart }) {
         alt={title}
       />
       <div>
-        <strong>{title}</strong> - ${price}
+        <strong>{title}</strong> : ${price}
       </div>
 
       <footer>
         <small>
           Qty: {quantity}
         </small>
-        <button onClick={addToCart}>+</button>
+        <button onClick={() => addToCart()}>+</button>
+        
+        <button onClick={() => decrementProduct()}>-</button>
       </footer>
     </li>
   )
@@ -26,7 +28,7 @@ function CartItem ({ thumbnail, price, title, quantity, addToCart }) {
 
 export function Cart () {
   const cartCheckboxId = useId()
-  const { cart, clearCart, addToCart } = useCart()
+  const { cart, clearCart, addToCart, decrementProduct } = useCart()
 
   return (
     <>
@@ -40,11 +42,12 @@ export function Cart () {
           {cart.map(product => (
             <CartItem
               key={product.id}
-              addToCart={() => addToCart(product)}
+              addToCart={() => addToCart(product)}              
+              decrementProduct={()=>decrementProduct(product)}
               {...product}
             />
           ))}
-        </ul>
+        </ul>        
 
         <button onClick={clearCart}>
           <ClearCartIcon />

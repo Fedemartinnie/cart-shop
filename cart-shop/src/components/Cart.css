@@ -6,6 +6,8 @@
     right: 0px;
     top: 0px;
     width: 200px;
+    max-height: 95vh; /* Establecer la altura máxima al 80% de la altura visible */
+    overflow-y: auto; /* Permitir el desplazamiento vertical */
   }
   
   .cart img {
